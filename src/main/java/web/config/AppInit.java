@@ -27,5 +27,3 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     }
 
 }
-
-// Идём, не останавливаемся, епть, отступать некуда!
