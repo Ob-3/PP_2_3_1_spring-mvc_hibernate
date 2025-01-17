@@ -18,9 +18,8 @@ public class CarServiceImpl implements CarService {
     public List<Car> carsList(int count) {
         List<Car> cars = carDao.getCarsList();
         if (count > 0 && count < 5) {
-            return cars.stream().limit(count).toList();
-        } else {
-            return cars;
+            return new ArrayList<>(cars.subList(0, Math.min(count, cars.size())));
         }
+        return cars;
     }
 }
