@@ -11,25 +11,25 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserDao userRepository;
+    private UserDao userDao;
 
     public List<User> findAll() {
-        return userRepository.findAll();
+        return userDao.findAll();
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id);
+        return userDao.findById(id);
     }
 
     public void save(User user) {
-        userRepository.save(user);
+        userDao.save(user);
     }
 
     public void update(User user) {
-        userRepository.update(user);
+        userDao.update(user);
     }
 
     public void delete(Long id) {
-        userRepository.delete(id);
+        userDao.delete(id);
     }
 }

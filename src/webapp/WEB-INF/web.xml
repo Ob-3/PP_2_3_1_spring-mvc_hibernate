@@ -13,7 +13,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.example.config.AppConfig</param-value>
+            <param-value>web.config.AppConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

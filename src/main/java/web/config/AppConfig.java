@@ -10,7 +10,9 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -22,16 +24,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class AppConfig {
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource);
-        em.setPackagesToScan("web.model");
-        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        em.setJpaProperties(hibernateProperties());
-        return em;
-    }
-
+    // Настройка DataSource
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -42,26 +35,57 @@ public class AppConfig {
         return dataSource;
     }
 
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource);
+        em.setPackagesToScan("web.model");
+        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+
+        // Дополнительные свойства Hibernate
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "update"); // Автоматическое создание/обновление таблиц
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect"); // Диалект для MySQL
+        properties.setProperty("hibernate.show_sql", "true"); // Показывать SQL-запросы в консоли
+        em.setJpaProperties(properties);
+
+        return em;
+    }
+
+    // Настройка TransactionManager
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(emf);
+        transactionManager.setEntityManagerFactory(emf); // Устанавливаем EntityManagerFactory
         return transactionManager;
     }
 
+    // Настройка Thymeleaf TemplateResolver
     @Bean
-    public InternalResourceViewResolver viewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/views/");
-        resolver.setSuffix(".jsp");
-        return resolver;
+    public SpringResourceTemplateResolver templateResolver() {
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setPrefix("/WEB-INF/pages/"); // Папка с HTML-файлами
+        templateResolver.setSuffix(".html"); // Расширение файлов
+        templateResolver.setTemplateMode("HTML5"); // Режим шаблона
+        templateResolver.setCharacterEncoding("UTF-8"); // Кодировка
+        return templateResolver;
     }
 
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-        properties.setProperty("hibernate.show_sql", "true");
-        return properties;
+    // Настройка Thymeleaf TemplateEngine
+    @Bean
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver()); // Устанавливаем резолвер
+        return templateEngine;
+    }
+
+    // Настройка Thymeleaf ViewResolver
+    @Bean
+    public ThymeleafViewResolver viewResolver() {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setTemplateEngine(templateEngine()); // Устанавливаем движок
+        viewResolver.setCharacterEncoding("UTF-8"); // Кодировка
+        return viewResolver;
     }
 }
