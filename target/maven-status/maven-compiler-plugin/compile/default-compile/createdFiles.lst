@@ -1,6 +1,9 @@
-AppConfig.class
-web\service\UserService.class
-web\controller\UserController.class
-web\dao\UserDao.class
-web\dao\UserDaoImpl.class
-web\model\User.class
+com\web\controller\UserController.class
+com\web\service\UserService.class
+com\web\config\WebInitializer.class
+com\web\model\User.class
+com\web\config\WebConfig.class
+com\web\dao\UserDao.class
+com\web\service\UserServiceImpl.class
+com\web\config\AppConfig.class
+com\web\dao\UserDaoImpl.class
