@@ -1,7 +1,6 @@
 package com.web.dao;
 
 import com.web.model.User;
-
 import java.util.List;
 
 public interface UserDao {

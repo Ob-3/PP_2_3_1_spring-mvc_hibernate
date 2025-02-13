@@ -6,12 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+//import jakarta.sql.DataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import java.util.Properties;
-
 
 @Configuration
 @ComponentScan("com.web")
@@ -33,20 +32,28 @@ public class AppConfig {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource());
         emf.setPackagesToScan("com.web.model");
+        emf.setJpaVendorAdapter(new org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter());
         emf.setJpaProperties(jpaProperties());
         return emf;
     }
 
     private Properties jpaProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+//        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.hbm2ddl.auto", "update");
         return properties;
     }
 
+//    @Bean
+//    public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean emf) {
+//        return new JpaTransactionManager(emf.getObject());
+//    }
+
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
     }
+
+
 }
