@@ -8,7 +8,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-//import jakarta.sql.DataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import java.util.Properties;
 
@@ -39,21 +38,14 @@ public class AppConfig {
 
     private Properties jpaProperties() {
         Properties properties = new Properties();
-//        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         properties.put("hibernate.show_sql", "true");
-        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.hbm2ddl.auto", "create-drop");
         return properties;
     }
 
-//    @Bean
-//    public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean emf) {
-//        return new JpaTransactionManager(emf.getObject());
-//    }
-
     @Bean
-    public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
-        return new JpaTransactionManager(emf);
+    public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean emf) {
+        return new JpaTransactionManager(emf.getObject());
     }
-
-
 }

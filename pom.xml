@@ -9,34 +9,37 @@
     <packaging>war</packaging>
 
     <properties>
-        <spring.version>6.2.2</spring.version>
+
         <hibernate.version>6.3.1.Final</hibernate.version>
-        <jakarta.persistence.version>3.1.0</jakarta.persistence.version>
 
     </properties>
 
     <dependencies>
 
         <!-- Spring  -->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
+            <version>6.2.2</version>
         </dependency>
 
-        <!-- Spring MVC -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
+            <version>6.2.2</version>
         </dependency>
-
-        <!-- Spring ORM for JPA support -->
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
+            <version>6.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>7.0.0-M1</version>
         </dependency>
 
 
@@ -44,7 +47,8 @@
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
-            <version>${jakarta.persistence.version}</version>
+            <version>3.1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -54,8 +58,6 @@
             <scope>provided</scope>
         </dependency>
 
-
-        <!-- https://mvnrepository.com/artifact/jakarta.activation/jakarta.activation-api -->
         <dependency>
             <groupId>jakarta.activation</groupId>
             <artifactId>jakarta.activation-api</artifactId>
@@ -68,39 +70,33 @@
             <version>2.0.1</version>
         </dependency>
 
-
-
-
         <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
+            <version>6.3.1.Final</version>
         </dependency>
 
         <!-- MySQL Connector -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version> <!-- Убедитесь, что версия актуальна -->
+            <version>8.0.33</version>
         </dependency>
 
         <!-- Thymeleaf -->
-        <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
 
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
-            <version>3.1.3.RELEASE</version>
+            <version>3.1.2.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring5</artifactId>
-            <version>3.1.3.RELEASE</version>
+            <artifactId>thymeleaf-spring6</artifactId>
+            <version>3.1.2.RELEASE</version>
         </dependency>
-
-
 
     </dependencies>
 
