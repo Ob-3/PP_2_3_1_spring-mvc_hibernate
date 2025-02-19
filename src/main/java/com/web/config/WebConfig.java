@@ -10,7 +10,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
-
+//Настройка Spring MVC и шаблонизатора Thymeleaf.
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.web")
@@ -34,10 +34,15 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public ViewResolver viewResolver() {
-        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
-        resolver.setTemplateEngine(templateEngine());
-        resolver.setCharacterEncoding("UTF-8");
-        return resolver;
+        try {
+            ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+            resolver.setTemplateEngine(templateEngine());
+            resolver.setCharacterEncoding("UTF-8");
+            return resolver;
+        } catch (Exception e) {
+            System.out.println("Ошибка в viewResolver" + e.getMessage());
+            throw e;
+        }
     }
 }
 

@@ -5,5 +5,5 @@ com\web\model\User.class
 com\web\config\WebConfig.class
 com\web\dao\UserDao.class
 com\web\service\UserServiceImpl.class
-com\web\config\AppConfig.class
 com\web\dao\UserDaoImpl.class
+com\web\config\DataConfig.class
