@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
-    private final UserDao userDao;
+    private UserDao userDao;
 
     @Autowired
     public UserServiceImpl(UserDao userDao) {
@@ -19,32 +20,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userDao.findAll();
+        return userDao.getAllUsers();
     }
 
     @Override
     public User getUserById(Long id) {
-        return userDao.findById(id);
+        return userDao.getUserById(id);
     }
 
 
     @Override
     @Transactional
     public void saveUser(User user) {
-        userDao.save(user);
+        userDao.saveUser(user);
     }
 
 
     @Override
     @Transactional
     public void updateUser(User user) {
-        userDao.update(user);
+        userDao.updateUser(user);
     }
 
 
     @Override
     @Transactional
     public void deleteUser(Long id) {
-        userDao.delete(id);
+        userDao.deleteUser(id);
     }
 }

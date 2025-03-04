@@ -3,7 +3,7 @@ package com.web.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "secondusers")
+@Table(name = "users")
 public class User {
 
     @Id

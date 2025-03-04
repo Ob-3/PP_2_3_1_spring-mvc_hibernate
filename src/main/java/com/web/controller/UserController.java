@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -30,14 +30,16 @@ public class UserController {
     }
 
     @GetMapping("/add")
-    public String showAddUserForm() {
+    public String showAddUserForm(Model model) {
+        model.addAttribute("user", new User());
         return "add";
     }
 
 
     @PostMapping("/add")
-    public String addUser(@RequestParam String name, @RequestParam String email) {
-        userService.saveUser(new User(name, email));
+    public String addUser(@ModelAttribute User user) {
+        System.out.println("Controller addUser - addUser: " + user);
+        userService.saveUser(user);
         return "redirect:/users/list";
     }
 
@@ -53,13 +55,8 @@ public class UserController {
 
 
     @PostMapping("/update")
-    public String updateUser(@RequestParam Long id, @RequestParam String name, @RequestParam String email) {
-        User user = userService.getUserById(id);
-        if (user != null) {
-            user.setName(name);
-            user.setEmail(email);
-            userService.updateUser(user);
-        }
+    public String updateUser(@ModelAttribute User user) {
+        userService.updateUser(user);
         return "redirect:/users/list";
     }
 
