@@ -38,7 +38,6 @@ public class UserController {
 
     @PostMapping("/add")
     public String addUser(@ModelAttribute User user) {
-        System.out.println("Controller addUser - addUser: " + user);
         userService.saveUser(user);
         return "redirect:/users/list";
     }

@@ -1,12 +1,9 @@
 package com.web.dao;
 
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.web.model.User;
 import jakarta.persistence.EntityManager;
-
 import java.util.List;
 
 @Repository
@@ -15,7 +12,6 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-//    @Autowired
     public UserDaoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -32,7 +28,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void saveUser(User user) {
-        System.out.println("DAO - saveUser: " + user.getName() + ", " + user.getEmail());
         entityManager.persist(user);
     }
 
@@ -42,7 +37,7 @@ public class UserDaoImpl implements UserDao {
         if (existingUser != null) {
             existingUser.setName(user.getName());
             existingUser.setEmail(user.getEmail());
-            entityManager.flush(); // Принудительно отправляем изменения в БД
+            entityManager.flush();
         } else {
             throw new IllegalArgumentException("User with ID " + user.getId() + " does not exist");
         }
